@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import Home from "./components/home/home";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -14,7 +14,7 @@ ReactDOM.render(
         {/* ---------------------------------------------- */}
         <Route path="/" exact={true}>
           {/* App.js staying for now till .jsx page is avaliable */}
-          <App />
+          <Home />
         </Route>
         {/* ---------------------------------------------- */}
       </Switch>
