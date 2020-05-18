@@ -1,16 +1,17 @@
 import React, { Component, useState, useEffect } from "react";
 import "./App.css";
 import logo from "../../logo.svg";
+import Filter from "./monsterFilter";
 
 // Axios
 import axios from "axios";
 
 export default function Home() {
-  const [monsterIndexArray, setMonsterIndexArray] = useState([]);
   // ------------------------------------------------------------------
   //initializing all variables
   // ------------------------------------------------------------------
   var baseURL = "http://www.dnd5eapi.co/api/monsters/";
+  const monsterIndexArray = [];
 
   // ------------------------------------------------------------------
   //axios call to get all 5e Monster data
@@ -18,7 +19,6 @@ export default function Home() {
   useEffect(() => {
     axios.get(baseURL).then((res) => {
       const data = res.data.results;
-      const monsterIndexArray = [];
       for (var i = 0; i < data.length; i++) {
         var index = data[i].index;
         monsterIndexArray.push(index);
@@ -29,22 +29,37 @@ export default function Home() {
     });
   }, []);
 
+  // ------------------------------------------------------------------
+  // Initial Hook
+  // ------------------------------------------------------------------
   function useInput(initialValue) {
     const [value, setValue] = useState(initialValue);
 
     function handleChange(e) {
       setValue(e.target.value);
     }
-
     return [value, handleChange];
   }
 
+  // ------------------------------------------------------------------
+  // Log in form logic
+  // ------------------------------------------------------------------
   function LoginForm() {
     const [requestedCR, setRequestedCR] = useInput("");
 
     function handleSubmit(e) {
       e.preventDefault();
-      console.log("Requested Challenge Rating: " + requestedCR);
+      if (requestedCR > 30) {
+        console.log(
+          "So, you have chosen to fight Cthulhu, roll a new character!" //Thanks Cam
+        );
+      }
+      if (requestedCR < 0) {
+        console.log("You fool! Fight an Awakened Shrub!");
+      } else {
+        console.log("Requested Challenge Rating: " + requestedCR);
+        // add Filter function here
+      }
     }
 
     return (
