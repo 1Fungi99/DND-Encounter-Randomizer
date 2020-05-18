@@ -6,9 +6,20 @@ import logo from "../../logo.svg";
 import axios from "axios";
 
 export default function Home() {
-  axios.get("http://www.dnd5eapi.co/api/monsters/").then((res) => {
-    const data = res;
-    console.log(data);
+  //initializing all variables
+  var baseURL = "http://www.dnd5eapi.co/api/monsters/";
+
+  //axios call to get all 5e Monster data
+  axios.get(baseURL).then((res) => {
+    const data = res.data.results;
+    const array = [];
+    for (var i = 0; i < data.length; i++) {
+      var index = data[i].index;
+      array.push(index);
+    }
+    //Will take all the the index values from all 5e monsters.
+    //Each element is searchable if plugged into baseURL
+    // console.log(array);
   });
   return (
     <div className="App">
