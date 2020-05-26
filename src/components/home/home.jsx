@@ -53,7 +53,9 @@ export default function Home() {
           var monsterData = res.data;
           monsterArray.push(monsterData);
         });
-      }
+        }
+
+
     });
   });
 
@@ -88,10 +90,13 @@ export default function Home() {
         console.log("You fool! Fight an Awakened Shrub!");
       } else {
         console.log("Requested Challenge Rating: " + requestedCR);
-        // monsterFilter(requestedCR);
-        console.log(monsterArray);
+        monsterFilter(requestedCR);
+        // console.log(monsterArray);
+
+        }
+
       }
-    }
+
 
     return (
       <form onSubmit={handleSubmit}>
@@ -104,24 +109,27 @@ export default function Home() {
         <button>Submit</button>
       </form>
     );
-  }
+    }
 
-  // function monsterFilter(requestedCR) {
-  //   for (var i = 0; i < monsterIndexArray.length; i++) {
-  //     axios.get(baseURL + monsterIndexArray[i]).then((res) => {
-  //       var CR = res.data.challenge_rating;
-  //       if (CR.toString() === requestedCR) {
-  //         // var name = res.data.name;
-  //         var monsterIndex = res.data.index;
-  //         // console.log(CR, name, monsterIndex);
-  //         axios.get(baseURL + monsterIndex).then((res) => {
-  //           requestedCRArray.push(res.data);
-  //           console.log(res.data);
-  //         });
-  //       }
-  //     });
-  //   }
-  // }
+   function monsterFilter(requestedCR) {
+     for (var i = 0; i < monsterIndexArray.length; i++) {
+       axios.get(baseURL + monsterIndexArray[i]).then((res) => {
+           var CR = res.data.challenge_rating;
+           var monsterName = res.data.name;
+           
+         if (CR.toString() === requestedCR) {
+           // var name = res.data.name;
+           var monsterIndex = res.data.index;
+           console.log(CR);
+           axios.get(baseURL + monsterIndex).then((res) => {
+             requestedCRArray.push(res.data);
+               console.log(res.data);
+
+           });
+         }
+       });
+     }
+   }
 
   return (
     <div className="App">
@@ -134,7 +142,8 @@ export default function Home() {
         {/* ---------------------------------------------- */}
         <LoginForm />
         {/* ---------------------------------------------- */}
-      </header>
+          </header>
     </div>
-  );
+    );
 }
+
